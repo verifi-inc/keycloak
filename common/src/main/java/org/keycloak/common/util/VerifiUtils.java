@@ -14,6 +14,6 @@ public class VerifiUtils {
                 return expires.getTime() / 1000;
             }
         }
-        return -1L;
+        throw new PemException(new RuntimeException("Unable to parse certificate expiry"));
     }
 }

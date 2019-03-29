@@ -7,10 +7,10 @@ import static org.junit.Assert.assertEquals;
 // Verifi custom code.  DO NOT COMMIT TO KEYCLOAK
 public class VerifiUtilsTest {
 
-    @Test
+    @Test(expected = PemException.class)
     public void testGetCertificateExpiryNoCerts() {
         String[] certs = new String[] {};
-        assertEquals(-1L, VerifiUtils.getCertificateExpiry(certs).longValue());
+        VerifiUtils.getCertificateExpiry(certs);
     }
 
     @Test
