@@ -19,7 +19,6 @@ package org.keycloak.jose.jwk;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.keycloak.common.util.PemUtils;
-import org.keycloak.common.util.VerifiUtils;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -48,8 +47,6 @@ public class RSAPublicJWK extends JWK {
 
     private String sha256x509Thumbprint;
 
-    private Long expiresOn;
-
     public String getModulus() {
         return modulus;
     }
@@ -76,7 +73,6 @@ public class RSAPublicJWK extends JWK {
             try {
                 sha1x509Thumbprint = PemUtils.generateThumbprint(x509CertificateChain, "SHA-1");
                 sha256x509Thumbprint = PemUtils.generateThumbprint(x509CertificateChain, "SHA-256");
-                expiresOn = VerifiUtils.getCertificateExpiry(x509CertificateChain);
             } catch (NoSuchAlgorithmException | IOException e) {
                 throw new RuntimeException(e);
             }
@@ -92,12 +88,5 @@ public class RSAPublicJWK extends JWK {
     public String getSha256x509Thumbprint() {
         return sha256x509Thumbprint;
     }
-
-    // HACK for Chase.  Should not be committed back to Keycloak
-    @JsonProperty("expires_on")
-    public Long getExpiresOn() {
-        return expiresOn;
-    }
-    // END HACK
 
 }
